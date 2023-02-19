@@ -8,9 +8,10 @@ RUN apt-get update && apt-get install -y \
 RUN mkdir /app
 WORKDIR /app
 
-ADD names.txt /app
-ADD post.sh /app
+COPY names.txt .
+COPY post.sh .
+RUN chmod +x post.sh
 
 RUN crontab -l | { cat; echo "* */3 * * * /app/post.sh"; } | crontab -
 
-CMD cron
+ENTRYPOINT ["cron", "-f"]
