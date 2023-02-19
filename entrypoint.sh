@@ -3,4 +3,4 @@
 env >> /etc/environment
 
 # start cron in the foreground (replacing the current process)
-exec "cron -f"
+exec "/usr/sbin/cron -f"
