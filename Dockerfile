@@ -12,6 +12,9 @@ COPY names.txt .
 COPY post.sh .
 RUN chmod +x post.sh
 
-RUN crontab -l | { cat; echo "* */3 * * * /app/post.sh"; } | crontab -
+COPY entrypoint.sh .
+RUN chmod +x entrypoint.sh
 
-ENTRYPOINT ["cron", "-f"]
+RUN echo "* */3 * * * root /app/post.sh /proc/1/fd/1 2>/proc/1/fd/2" >> /etc/crontab
+
+ENTRYPOINT ["entrypoint.sh"]
