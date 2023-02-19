@@ -15,6 +15,7 @@ RUN chmod +x post.sh
 COPY entrypoint.sh .
 RUN chmod +x entrypoint.sh
 
-RUN echo "* */3 * * * root /app/post.sh /proc/1/fd/1 2>/proc/1/fd/2" >> /etc/crontab
+RUN echo "0 */3 * * * root /app/post.sh /proc/1/fd/1 2>/proc/1/fd/2" >> /etc/crontab
 
 ENTRYPOINT ["/app/entrypoint.sh"]
+CMD ["cron","-f", "-l", "2"]
